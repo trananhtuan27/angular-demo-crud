@@ -39,7 +39,18 @@
         </form>
       </div>
     </nav>
-<input [style.width.px]="width" (keyup)="search($event)">
+    <app-input-search (word)="search($event)"></app-input-search>
+    <div *ngIf="isShowForm">
+      <input placeholder="Nhap ten" [(ngModel)]="name">
+      <input placeholder="Nhap email" [(ngModel)]="email">
+      <input placeholder="Nhap address" [(ngModel)]="address">
+      <input placeholder="Nhap so dien thoai" [(ngModel)]="phone">
+      <button (click)="addUsers();">Them moi Users</button>
+    </div>
+    <div>
+      <button (click)="isShowForm = true" *ngIf="!isShowForm">Them moi Users</button>
+    </div>
+
     <table class="table">
       <thead>
 
@@ -53,12 +64,39 @@
       </thead>
       <tbody>
       <tr *ngFor="let user of userList , index as i">
-        <td>{{i+1}}</td>
+        <td>{{i + 1}}</td>
         <td>{{user.name}}</td>
         <td>{{user.email}}</td>
         <td>{{user.address}}</td>
         <td>{{user.phone}}</td>
-      </tr>
+        <td>
+          <button (click)="removeUsers(i)" class="btn btn-danger">Xoa</button>
+        </td>
+        <!--        <td>-->
+        <!--          <button (click)="toggleEdit(i)" class="btn btn-outline-success my-2 my-sm-0" [hidden]="!user.hide">Sua</button>-->
+        <!--        </td>-->
+        <!--        <td>-->
+        <!--          <div [hidden]="user.hide">-->
+        <!--            <div class="form-group">-->
+        <!--              <label>Name</label>-->
+        <!--              <input type="text" class="form-control" id="name" aria-describedby="name" [ngModel]="name">-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--          <div class="form-group">-->
+        <!--            <label>Email</label>-->
+        <!--            <input type="text" class="form-control" id="email" aria-describedby="email" [ngModel]="email">-->
+        <!--          </div>-->
+        <!--          <div class="form-group">-->
+        <!--            <label>Address</label>-->
+        <!--            <input type="text" class="form-control" id="address" aria-describedby="Address" [ngModel]="address">-->
+        <!--          </div>-->
+        <!--          <div class="form-group">-->
+        <!--            <label>Phone</label>-->
+        <!--            <input type="text" class="form-control" id="phone" aria-describedby="phone" [ngModel]="phone">-->
+        <!--          </div>-->
+        <!--          <button type="submit" class="btn -btn-primary" (click)="user.hide = true">Submit</button>-->
+        <!--        </td>-->
+        <!--      </tr>-->
 
       </tbody>
     </table>
@@ -66,6 +104,7 @@
 
     </div>
   </div>
+
 
 </div>
 

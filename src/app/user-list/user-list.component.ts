@@ -7,6 +7,11 @@ import {IUser} from '../user/IUser';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
+  isShowForm = false;
+  name = '';
+  email = '';
+  address = '';
+  phone;
   width = 200;
   data: IUser[] = [];
   userList: IUser[] = [
@@ -31,21 +36,36 @@ export class UserListComponent implements OnInit {
   ];
 
   constructor() {
+    this.data = this.userList;
   }
 
-  search(event) {
-    let keyword = event.target.value;
-    for (let user of this.userList) {
-      if (keyword === user.name) {
-        this.data.push(user);
-      }
-    }
-    if (this.data.length > 0) {
-      this.userList = this.data;
+  filterSearch(value): IUser[] {
+    return this.data.filter(user => user.name.indexOf(value) !== -1);
+  }
+
+  search(value) {
+
+    this.userList = this.filterSearch(value);
+  }
+
+  addUsers() {
+    this.userList.unshift({
+      name: this.name,
+      email: this.email,
+      address: this.address,
+      phone: this.phone,
+    });
+  }
+
+  removeUsers(index) {
+    if (confirm('Ban co muon xoa khong?')) {
+      this.userList.splice(index, 1);
     }
   }
 
-
+// toggleEdit(index){
+//     this.users[index].hide = false;
+// }
   ngOnInit(): void {
   }
 
